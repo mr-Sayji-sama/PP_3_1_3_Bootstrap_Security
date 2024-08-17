@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Admin</title>
+</head>
+<body>
+<h1>Admin</h1>
+
+<div class="button-group" sec:authorize="isFullyAuthenticated()">
+    <a href="/logout">Logout</a>
+</div>
+<p><a th:href="@{'/admin/adminadd'}">Add new user</a></p>
+<div>
+    <table border="1">
+        <thead>
+        <th>ID</th>
+        <th>UserName</th>
+        <th>Password</th>
+        <th>Age</th>
+        <th>Roles</th>
+        <th>Action</th>
+        </thead>
+        <tr th:each ="user  : ${allUsers}">
+            <td th:utext="${user.getId()}">...</td>
+            <td th:utext="${user.getUsername()}">...</td>
+            <td th:utext="${user.getPassword()}">...</td>
+            <td th:utext="${user.getAge()}">...</td>
+            <td th:utext="${user.getRoles()}">...</td>
+            <td >
+                <a th:href="@{'/admin/edit?id='+${user.getId()}}">Edit</a>
+                <a th:href="@{'/delete?id='+${user.getId()}}">Delete</a>
+            </td>
+        </tr>
+    </table>
+    <a href="/">Главная</a>
+</div>
+</body>
+</html>

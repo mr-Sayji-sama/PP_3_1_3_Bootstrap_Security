@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+</head>
+<body>
+<!--/*@thymesVar id="user" type="ru.kata.spring.boot_security.demo.Model.User"*/-->
+<form action="#" th:action="@{/admin/edit}" th:object="${user}" method="post">
+    <div>
+        <label>UserName:</label>
+        <input type="text" th:field="*{username}" placeholder="string" />
+    </div>
+    <div>
+        <label>Password:</label>
+        <input type="text" th:field="*{password}" placeholder="string" />
+    </div>
+    <div>
+        <label>Age:</label>
+        <input type="text" th:field="*{age}" placeholder="string" />
+    </div>
+    <div class="form-group row">
+        <label class="col-4 col-form-label">Roles: </label>
+        <div class="col-8">
+            <th:block th:each="roles: ${listRoles}">
+                <input type="checkbox" th:field="*{roles}"
+                       th:text="${roles.name}" th:value="${roles.id}" class="m-2" />
+            </th:block>
+        </div>
+    </div>
+    <input type="hidden" th:field="*{id}" id="id">
+    <button name="action" type="submit" value="save">Save</button>
+    <button name="action" type="submit" value="cancel">Cancel</button>
+</form>
+</body>
+</html>

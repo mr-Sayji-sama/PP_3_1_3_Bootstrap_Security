@@ -1,11 +1,44 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+          xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="layout">
+
 <head>
-    <title>Spring Security Example</title>
+    <title>User Home</title>
 </head>
 <body>
-<h1>User, welcome spring boot security page!</h1>
+<!--/*@thymesVar id="user" type="ru.kata.spring.boot_security.demo.Model.User"*/-->
+<div layout:fragment="content">
+    <p>
+        <h1>Welcome, <span th:text="${user.getUsername()}"></span> </h1>
+     </p>
+     <p>
+         <a th:href="@{/logout}">Logout</a>
+     </p>
 
+    <table border="1">
+        <thead>
+        <th>ID</th>
+        <th>UserName</th>
+        <th>Password</th>
+        <th>Age</th>
+        <th>Roles</th>
+        </thead>
+            <tr>
+                <td th:utext="${user.getId()}">...</td>
+                <td th:utext="${user.getUsername()}">...</td>
+                <td th:utext="${user.getPassword()}">...</td>
+                <td th:utext="${user.getAge()}">...</td>
+                <td
+                    th:utext="${user.getRoles()}">...</td>
+                </td>
+            </tr>
+    </table>
+    <a href="/">Главная</a>
+ </div>
 
-</body>
-</html>
+ </body>
+
+ </html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add</title>
+</head>
+<body>
+<!--/*@thymesVar id="user" type="ru.kata.spring.boot_security.demo.Model.User"*/-->
+<form action="#" th:action="@{/admin/adminadd}" th:object="${user}" method="post">
+    <input type="hidden" th:field="*{id}" id="id">
+    <div>
+        <label>username:</label>
+        <input type="text" th:field="*{username}" placeholder="string" />
+    </div>
+    <div>
+        <label>password:</label>
+        <input type="text" th:field="*{password}" placeholder="string" />
+    </div>
+    <div>
+        <label>age:</label>
+        <input type="text" th:field="*{age}" placeholder="string" />
+    </div>
+    <button name="action" type="submit" value="save">Save</button>
+</form>
+</body>
+</html>
