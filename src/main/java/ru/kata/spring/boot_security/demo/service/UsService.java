@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface UsService {
     void save(User user);
     Optional<User> findUserByHisName(String str);
+    Optional<User> findByEmail(String email);
 }

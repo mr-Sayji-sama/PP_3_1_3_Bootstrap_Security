@@ -36,19 +36,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/admin/**", "/delete").hasRole( "ADMIN")
                 .antMatchers("/user").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/", "index").permitAll()
+                .antMatchers("/", "/index", "/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().successHandler(successUserHandler)
+                .formLogin()
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .successHandler(successUserHandler)
                 .permitAll()
                 .and()
                 .logout()
                 .permitAll();
     }
 
-    @Bean //Ставим степень кодировки, с которой кодировали пароль в базе
+    @Bean
     public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder(5);
+        return new BCryptPasswordEncoder();
     }
 
     @Autowired

@@ -23,20 +23,16 @@ public class MyController {
     @Autowired
     private StringHttpMessageConverter stringHttpMessageConverter;
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(Model model, String error, String logout) {
-        if (error != null)
-            model.addAttribute("error", "Your username and password is invalid.");
-
-        if (logout != null)
-            model.addAttribute("message", "You have been logged out successfully.");
-
-        return "login";
-    }
 
     @GetMapping("/admin/admin")
     public String userList(Model model) {
         model.addAttribute("allUsers", userService.allUsers());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String us=auth.getName();
+        model.addAttribute("user", userService.findUserByName(us));
+        model.addAttribute("newuser", new User());
+        List<Role> listRoles = userService.listRoles();
+        model.addAttribute("listRoles", listRoles);
         return "admin/admin";
     }
 
@@ -62,9 +58,7 @@ public class MyController {
 
     @RequestMapping (value = "/admin/edit", method= RequestMethod.GET)
     public String edit(ModelMap model, @RequestParam Long id) {
-        //Long id = Long.parseLong(servletRequest.getParameter("id"));
         User user = userService.findUserById(id);
-        user.setPassword("");
         model.addAttribute("user", user);
         List<Role> listRoles = userService.listRoles();
         model.addAttribute("listRoles", listRoles);
@@ -90,7 +84,17 @@ public class MyController {
         }
         return new ModelAndView( "redirect:/admin/admin");
     }
-    @RequestMapping(value="delete", method= RequestMethod.GET)
+
+    @RequestMapping (value = "/admin/delete", method= RequestMethod.GET)
+    public String del(ModelMap model, @RequestParam Long id) {
+        User user = userService.findUserById(id);
+        model.addAttribute("user", user);
+        List<Role> listRoles = userService.listRoles();
+        model.addAttribute("listRoles", listRoles);
+        return "admin/delete";
+    }
+
+    @RequestMapping(value="delete", method= RequestMethod.POST)
     public String deleteItem(@RequestParam Long id) {
         userService.deleteUser(id);
         return "redirect:/admin/admin";
@@ -108,3 +112,4 @@ public class MyController {
         return "redirect:/admin/admin";
     }
 }
+

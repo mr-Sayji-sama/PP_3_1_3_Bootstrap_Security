@@ -32,12 +32,12 @@ public class User implements UserDetails {
     private String email;
     @Size(min=2, message = "Не меньше 5 знаков")
     private String username;
+    @Column(name = "firstname")
+    private String firstname;
     @Size(min=2, message = "Не меньше 5 знаков")
     private String lastname;
     @Size(min=2, message = "Не меньше 5 знаков")
     private String password;
-    @Transient
-    private String passwordConfirm;
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Role> roles;
 
@@ -54,7 +54,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     public String getLastname() {
@@ -111,23 +111,23 @@ public class User implements UserDetails {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email;this.username = email;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
-
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
-    }
-
     public Set<Role> getRoles() {
         return roles;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public void setRoles(Set<Role> roles) {

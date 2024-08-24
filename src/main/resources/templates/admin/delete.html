@@ -1,12 +1,12 @@
 <div class="modal-header">
-    <h5 class="modal-title" id="editTitle">Edit user</h5>
+    <h5 class="modal-title" id="deleterTitle">Delete user</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <div class="modal-body">
     <!--/*@thymesVar id="user" type="ru.kata.spring.boot_security.demo.Model.User"*/-->
-    <form class="col" action="#" th:action="@{/admin/edit}" th:object="${user}" method="post">
+    <form class="col" action="#" th:action="@{/delete}" th:object="${user}" method="post">
         <div style="text-align: center;" class="col-8 mx-auto">
             <div class="form-group row">
                 <label class="col col-form-label" for="id"><strong>Id</strong></label>
@@ -14,27 +14,23 @@
             </div>
             <div class="form-group row">
                 <label class="col col-form-label" for="firstname"><strong>First name</strong></label>
-                <input class="form-control-plaintext border" type="text" th:field="*{firstname}" placeholder="string"/>
+                <input class="form-control-plaintext border" type="text" th:field="*{firstname}" placeholder="string" readonly="readonly" />
             </div>
             <div class="form-group row">
                 <label class="col col-form-label" for="lastname"><strong>Last name</strong></label>
-                <input class="form-control-plaintext border" type="text" th:field="*{lastname}" placeholder="string"/>
+                <input class="form-control-plaintext border" type="text" th:field="*{lastname}" placeholder="string"readonly="readonly" />
             </div>
             <div class="form-group row">
                 <label class="col col-form-label" for="age"><strong>Age</strong></label>
-                <input class="form-control-plaintext border" type="text" th:field="*{age}" placeholder="string"/>
+                <input class="form-control-plaintext border" type="text" th:field="*{age}" placeholder="string" readonly="readonly"/>
             </div>
             <div class="form-group row">
                 <label class="col col-form-label" for="email"><strong>Email</strong></label>
-                <input class="form-control-plaintext border" type="text" th:field="*{email}" placeholder="string"/>
-            </div>
-            <div class="form-group row">
-                <label class="col col-form-label" for="password"><strong>Password</strong></label>
-                <input class="form-control" type="password" th:field="*{password}" placeholder="Password"/>
+                <input class="form-control-plaintext border" type="text" th:field="*{email}" placeholder="string" readonly="readonly"/>
             </div>
             <div class="form-group row">
                 <label class="col col-form-label" for="roles"><strong>Role</strong></label>
-                <select th:field="*{roles}" multiple class="custom-select" id="roles">
+                <select th:field="*{roles}" multiple class="custom-select" id="roles" readonly="readonly">
                     <option th:each="role : ${listRoles}"
                             th:text="${role.name}"
                             th:value="${role.id}">
@@ -43,7 +39,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button class="btn btn-success" name="action" type="submit" value="save">Edit</button>
+            <button class="btn btn-danger" name="action" type="submit" value="save">Delete</button>
         </div>
     </form>
 </div>

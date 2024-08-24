@@ -41,4 +41,11 @@ public class UsServiceImpl implements UsService {
 				.setParameter("name", name)
 				.getResultStream().findAny();
 	}
+
+	@Override
+	public Optional<User> findByEmail(String email) {
+		return em.createQuery("select u from User u where u.email =:email", User.class)
+				.setParameter("email", email)
+				.getResultStream().findAny();
+	}
 }
