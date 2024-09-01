@@ -1,89 +1,22 @@
 package ru.kata.spring.boot_security.demo.service;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.kata.spring.boot_security.demo.Model.Role;
 import ru.kata.spring.boot_security.demo.Model.User;
-import ru.kata.spring.boot_security.demo.Repository.RoleRepository;
-import ru.kata.spring.boot_security.demo.Repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
-@Service
-@Transactional
-public class UserService implements UserDetailsService {
-    @PersistenceContext
-    private EntityManager em;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    RoleRepository roleRepository;
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        for (Role role : user.getRoles()){
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
-        }
-
-        //return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), grantedAuthorities);
-    }
-
-    public User findUserByName(String username) {
-        User user = userRepository.findByUsername(username);
-        return user;
-    }
-
-    public User findUserById(Long userId) {
-        Optional<User> userFromDb = userRepository.findById(userId);
-        return userFromDb.orElse(new User());
-    }
-
-    public List<User> allUsers() {
-        return userRepository.findAll();
-    }
-
-    public boolean saveUser(User user) {
-        //user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        userRepository.save(user);
-        return true;
-    }
-
-    @Bean
-    public BCryptPasswordEncoder bbCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    public boolean deleteUser(Long userId) {
-        if (userRepository.findById(userId).isPresent()) {
-            userRepository.deleteById(userId);
-            return true;
-        }
-        return false;
-    }
-
-    public List<User> usergtList(Long idMin) {
-        return em.createQuery("SELECT u FROM User u WHERE u.id > :paramId", User.class)
-                .setParameter("paramId", idMin).getResultList();
-    }
-    public List<Role> listRoles() {
-        return roleRepository.findAll();
-    }
+public interface UserService {
+    UserDetails loadUserByUsername(String username);
+    User findUserByName(String username);
+    User findUserById(Long userId);
+    List<User> allUsers();
+    boolean saveUser(User user);
+    boolean deleteUser(Long userId);
+    List<User> usergtList(Long idMin);
+    List<Role> listRoles();
+    BCryptPasswordEncoder bbCryptPasswordEncoder();
+    Optional<User> findByEmail(String email);
 }
