@@ -20,14 +20,18 @@ import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
-@Transactional
 public class UserServiceImp implements UserDetailsService, UserService {
     @PersistenceContext
     private EntityManager em;
+
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+
     @Autowired
-    UserRepository userRepository;
-    @Autowired
-    RoleRepository roleRepository;
+    private UserServiceImp(UserRepository userRepository, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

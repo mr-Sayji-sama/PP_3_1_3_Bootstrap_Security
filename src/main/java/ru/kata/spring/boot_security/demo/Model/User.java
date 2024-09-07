@@ -38,7 +38,7 @@ public class User implements UserDetails {
     private String lastname;
     @Size(min=2, message = "Не меньше 5 знаков")
     private String password;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
     public User() {

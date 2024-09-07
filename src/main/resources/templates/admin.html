@@ -31,7 +31,7 @@
         <div class="col-2">
             <ul class="nav flex-column">
                 <li class="nav-item" style="background-color: #49aaff;margin-top: 10px;">
-                    <a class="nav-link" style="color: white;" th:href="@{/admin/admin}">Admin</a>
+                    <a class="nav-link" style="color: white;" th:href="@{/admin}">Admin</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/user}">User</a>
@@ -85,7 +85,7 @@
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                     <div class="col" style="background-color: #e6e6e6;"><h3>Add new user</h3></div>
                     <div class="col" style="background-color: white;text-align: center;">
-                        <form class="col-6 mx-auto" action="#" th:action="@{/admin/adminadd}" th:object="${newuser}" method="post">
+                        <form class="col-6 mx-auto" action="#" th:action="@{/adminadd}" th:object="${newuser}" method="post">
                             <input type="hidden" th:field="*{id}" id="id">
                             <div class="form-group row">
                                 <label class="col col-form-label" for="firstname">First name</label>
@@ -145,7 +145,7 @@
 <script>
     function edclick(id) {
         $.ajaxSetup({ cache: false });
-        $('#myModalContent').load("/admin/edit?id="+id, function () {
+        $('#myModalContent').load("/edit?id="+id, function () {
             $('#myModal').modal({
                 backdrop: 'static',
                 keyboard: true
@@ -155,7 +155,7 @@
     };
     function delclick(id) {
         $.ajaxSetup({ cache: false });
-        $('#myModalContent').load("/admin/delete?id="+id, function () {
+        $('#myModalContent').load("/delete?id="+id, function () {
             $('#myModal').modal({
                 backdrop: 'static',
                 keyboard: true
