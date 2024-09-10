@@ -19,6 +19,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.*;
 
+@Transactional
 @Service
 public class UserServiceImp implements UserDetailsService, UserService {
     @PersistenceContext
@@ -28,7 +29,7 @@ public class UserServiceImp implements UserDetailsService, UserService {
     private final RoleRepository roleRepository;
 
     @Autowired
-    private UserServiceImp(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserServiceImp(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
