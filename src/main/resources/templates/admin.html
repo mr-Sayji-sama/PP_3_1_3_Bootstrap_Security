@@ -13,7 +13,7 @@
 <div class="row text-white bg-dark">
     <div class="col d-flex justify-content-between align-items-center">
         <div sec:authorize="isFullyAuthenticated()">
-            <h4 style="margin-left: 30px;"><b><span th:text="${user.getUsername()}"></span></b> with roles <span
+            <h4 style="margin-left: 30px;"><b><span th:text="${user.getEmail()}"></span></b> with roles <span
                     th:text="${user.getRoles()}"></span></h4>
         </div>
         <div class="col-1 ml-auto">
@@ -51,6 +51,7 @@
                         <table class="table table-striped">
                             <thead>
                             <th>ID</th>
+                            <th>User Name</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Age</th>
@@ -62,6 +63,7 @@
                             <tbody>
                             <tr th:each ="user  : ${allUsers}">
                                 <td th:utext="${user.getId()}">...</td>
+                                <td th:utext="${user.getUsername()}">...</td>
                                 <td th:utext="${user.getFirstname()}">...</td>
                                 <td th:utext="${user.getLastname()}">...</td>
                                 <td th:utext="${user.getAge()}">...</td>
@@ -87,6 +89,10 @@
                     <div class="col" style="background-color: white;text-align: center;">
                         <form class="col-6 mx-auto" action="#" th:action="@{/adminadd}" th:object="${newuser}" method="post">
                             <input type="hidden" th:field="*{id}" id="id">
+                            <div class="form-group row">
+                                <label class="col col-form-label" for="username">User name</label>
+                                <input class="form-control-plaintext border" type="text" th:field="*{username}" placeholder="string" />
+                            </div>
                             <div class="form-group row">
                                 <label class="col col-form-label" for="firstname">First name</label>
                                 <input class="form-control-plaintext border" type="text" th:field="*{firstname}" placeholder="string" />
